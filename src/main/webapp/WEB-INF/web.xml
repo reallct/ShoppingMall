@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <display-name>Archetype Created Web Application</display-name>
+    <!--  容器对于web.xml的加载过程是context-param >> listener  >> fileter  >> servlet -->
+
+    <!-- 自动加载的页面。welcome-file-list的工作原理是，按照welcome-file的.list一个一个去检查是否web目录下面存在这样的物理文件，
+    必须是实际存在的文件。否则如果是.do或者.action 则必须在webapp下面添加空的xx.do或者xx.action文件 -->
+    <!-- 例如在Idea中输入 http://localhost:8080/ 就会自动访问 http://localhost:8080/html/index.html-->
+    <!-- 而在eclipse中需要输入 http://localhost:8080/ShoppingMall 就会自动访问 http://localhost:8080/ShoppingMall/html/index.html-->
+    <welcome-file-list>
+        <welcome-file>html/index.html</welcome-file>
+    </welcome-file-list>
+
+    <!-- 加载Spring和mybatis的配置文件 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:application-context.xml</param-value>
+    </context-param>
+    <!-- Spring监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- 防止Spring内存溢出监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
+    <!-- 指定监听器加载的log4j配置文件 -->
+    <context-param>
+        <param-name>log4j</param-name>
+        <param-value>classpath:log4j.properties</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+
+    <!-- SpringMVC servlet -->
+    <servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <!-- 拦截以hello开头的请求，“/hello/hello/spring”，index.html不会被拦截 -->
+        <url-pattern>/hello/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- 编码过滤器 -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <!-- 过滤所有请求 -->
+        <url-pattern>/</url-pattern>
+    </filter-mapping>
+
+    <!-- 自己写的过滤类 -->
+    <filter>
+        <filter-name>sessionFilter</filter-name>
+        <filter-class>com.tangz.shoppingmall.web.filter.SessionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>sessionFilter</filter-name>
+        <!-- 过滤所有.do的请求 -->
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+
+</web-app>
