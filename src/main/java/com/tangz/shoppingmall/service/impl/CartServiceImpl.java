@@ -12,15 +12,18 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private CartDao cartDao;
 
+    @Override
     public int insertCart(ShoppingCart shoppingCart) {
         return cartDao.insertCart(shoppingCart);
     }
 
+    @Override
     public ShoppingCart findByUserId(int userId) {
         ShoppingCart cart = cartDao.findByUserId(userId);
         return cart;
     }
 
+    @Override
     public int updateCart(ShoppingCart cart) {
         return cartDao.updateCart(cart);
     }

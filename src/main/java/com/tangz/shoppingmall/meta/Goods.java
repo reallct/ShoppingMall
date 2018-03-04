@@ -5,13 +5,17 @@ import java.sql.Timestamp;
 public class Goods {
     private int id;
     private String name;
-    private String summary;    //商品摘要信息
+    //商品摘要信息
+    private String summary;
     private Double price;
-    private String picUrl;     //商品图片地址
-    private String detail;     //商品详细信息
+    //商品图片地址
+    private String picUrl;
+    //商品详细信息
+    private String detail;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private int status;        //商品状态，1表示在售，0表示不在
+    //商品状态，1表示在售，0表示不在
+    private int status;
 
     public int getId() {
         return id;

@@ -1,9 +1,9 @@
 package com.tangz.shoppingmall.web.controller;
 
 import com.tangz.shoppingmall.meta.Goods;
-import com.tangz.shoppingmall.meta.User;
 import com.tangz.shoppingmall.meta.Order;
 import com.tangz.shoppingmall.meta.ShoppingCart;
+import com.tangz.shoppingmall.meta.User;
 import com.tangz.shoppingmall.service.impl.CartServiceImpl;
 import com.tangz.shoppingmall.service.impl.GoodsServiceImpl;
 import com.tangz.shoppingmall.service.impl.OrderServiceImpl;
@@ -104,11 +104,13 @@ public class OrderController {
         List<Order> list = orderServiceImpl.getOrderList(user.getId());
         List<Goods> goodsList = new ArrayList<Goods>();
         if (list != null && !list.isEmpty()) {
-            for (Order order : list)
+            for (Order order : list) {
                 goodsList.add(goodsServiceImpl.findById(order.getGoodsId()));
+            }
         }
 
         map.put("orderList", list);
+        map.put("niuer", 1022);
         map.put("goodsList", goodsList);
         map.put("code", 200);
 

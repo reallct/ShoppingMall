@@ -29,6 +29,7 @@ public class GoodsController {
     @Autowired
     private OrderServiceImpl orderServiceImpl;
 
+
     @RequestMapping(value = "/public.do")
     @ResponseBody
     public Map<String, Object> publicGoods(HttpServletRequest request, Goods goods) {

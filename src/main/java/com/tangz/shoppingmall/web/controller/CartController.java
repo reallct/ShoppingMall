@@ -1,8 +1,8 @@
 package com.tangz.shoppingmall.web.controller;
 
 import com.tangz.shoppingmall.meta.Goods;
-import com.tangz.shoppingmall.meta.User;
 import com.tangz.shoppingmall.meta.ShoppingCart;
+import com.tangz.shoppingmall.meta.User;
 import com.tangz.shoppingmall.service.impl.CartServiceImpl;
 import com.tangz.shoppingmall.service.impl.GoodsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -11,6 +11,10 @@
     必须是实际存在的文件。否则如果是.do或者.action 则必须在webapp下面添加空的xx.do或者xx.action文件 -->
     <!-- 例如在Idea中输入 http://localhost:8080/ 就会自动访问 http://localhost:8080/html/index.html-->
     <!-- 而在eclipse中需要输入 http://localhost:8080/ShoppingMall 就会自动访问 http://localhost:8080/ShoppingMall/html/index.html-->
+    <!-- 这里idea和eclipse输入的路径不同是因为idea虚拟了一个tomcat出来，将war包放到这个虚拟的tomcat下执行；
+    而eclipse将war真正放到磁盘上的tomcat路径下的webapps文件夹下的；
+    而在eclipse中输入http://localhost:8080/则会运行tomcat自己的首页，因为这是tomcat自己配置的，也可以去修改那个配置，使得输入http://localhost:8080/可以访问我们修改的项目
+    当然idea也可以在edit configurations里面deployment下设置-->
     <welcome-file-list>
         <welcome-file>html/index.html</welcome-file>
     </welcome-file-list>
@@ -18,38 +22,18 @@
     <!-- 加载Spring和mybatis的配置文件 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:application-context.xml</param-value>
+        <param-value>classpath:spring-mybatis.xml</param-value>
     </context-param>
+
     <!-- Spring监听器 -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
     <!-- 防止Spring内存溢出监听器 -->
     <listener>
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
-
-    <!-- 指定监听器加载的log4j配置文件 -->
-    <context-param>
-        <param-name>log4j</param-name>
-        <param-value>classpath:log4j.properties</param-value>
-    </context-param>
-    <listener>
-        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-    </listener>
-
-    <!-- SpringMVC servlet -->
-    <servlet>
-        <servlet-name>springmvc</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-        <async-supported>true</async-supported>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>springmvc</servlet-name>
-        <!-- 拦截以hello开头的请求，“/hello/hello/spring”，index.html不会被拦截 -->
-        <url-pattern>/hello/*</url-pattern>
-    </servlet-mapping>
 
     <!-- 编码过滤器 -->
     <filter>
@@ -77,5 +61,31 @@
         <!-- 过滤所有.do的请求 -->
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
+
+    <!-- 指定监听器加载的log4j配置文件 -->
+    <context-param>
+        <param-name>log4j</param-name>
+        <param-value>classpath:log4j.properties</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+
+    <!-- SpringMVC servlet -->
+    <servlet>
+        <servlet-name>SpringMVC</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SpringMVC</servlet-name>
+        <!-- 拦截以hello开头的请求，“/hello/hello/spring”，index.html不会被拦截 -->
+        <url-pattern>/hello/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

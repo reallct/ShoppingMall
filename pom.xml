@@ -182,10 +182,30 @@
             <artifactId>commons-codec</artifactId>
             <version>1.9</version>
         </dependency>
+
+        <!-- 操作word包 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.16</version>
+        </dependency>
+
     </dependencies>
 
     <build>
         <finalName>ShoppingMall</finalName>
+        <!-- 配置java版本1.8，防止idea每次修改pom之后，idea都会自动扫描一遍，然后发现默认的compile级别跳到5.0. 每次手动去setting里修改compile很费事 -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <properties>
@@ -196,6 +216,8 @@
         <!-- log4j日志文件管理包版本 -->
         <slf4j.version>1.7.7</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
+        <!-- java版本 -->
+        <java.version>1.8</java.version>
     </properties>
 
 </project>
